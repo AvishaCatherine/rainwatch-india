@@ -1,0 +1,26 @@
+# RainWatch India — pinned dependencies (tested with Python 3.11 / 3.12)
+# Install:  pip install -r requirements.txt
+#
+# Big Data processing
+pyspark==3.5.4                # requires a local JDK (11 / 17 / 21) — see docs/SETUP_WINDOWS.md
+
+# Dashboard & visualisation
+streamlit==1.66.0
+plotly==6.5.2
+
+# Data handling
+pandas==2.2.3
+numpy==2.1.3
+pyarrow==26.0.0               # Parquet engine
+geopandas==1.1.2              # district spatial joins
+xarray==2026.9.0              # scientific raster I/O (NetCDF, e.g. for IMERG-style sources)
+netcdf4==1.7.5
+
+# Utilities
+requests==2.32.5
+pyyaml==6.0.3
+tqdm==4.67.1
+psutil==7.2.2
+
+# Testing
+pytest==9.0.2

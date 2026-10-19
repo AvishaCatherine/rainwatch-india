@@ -1,0 +1,74 @@
+# ============================================================
+# RainWatch India — project configuration
+# All paths are resolved relative to the project root unless absolute.
+# You normally do NOT need to change anything here to run the project.
+# ============================================================
+
+project:
+  name: "RainWatch India"
+  description: >-
+    Historical rainfall analytics and district-level rainfall-exposure
+    assessment for India using Big Data tooling (Apache Spark, Parquet).
+
+# ------------------------------------------------------------
+# Dataset selection
+# ------------------------------------------------------------
+dataset:
+  # Primary source used in this project: NASA POWER daily satellite-derived
+  # meteorology (MERRA-2 assimilation, bias-corrected precipitation).
+  # Rationale and substitution history: docs/DATA_SOURCES.md
+  source: "power"
+  parameter: "PRECTOTCORR"        # corrected precipitation, units mm/day
+  start_date: "2015-01-01"        # first day requested
+  end_date: "2026-10-18"          # actual data coverage is verified by the pipeline
+
+  # Lattice of sample points over India (degrees).
+  # 0.5 deg ~ 55 km cells; matches the native resolution of the source.
+  grid:
+    lat_min: 6.75
+    lat_max: 36.75
+    lat_step: 0.5
+    lon_min: 68.25
+    lon_max: 96.75
+    lon_step: 0.5
+
+download:
+  concurrency: 6                  # parallel requests to the POWER API
+  timeout_seconds: 90
+  max_retries: 5
+
+# ------------------------------------------------------------
+# District boundaries (spatial reference data)
+# ------------------------------------------------------------
+districts:
+  source: "geoBoundaries gbOpen IND ADM2"
+  download_url: "https://media.githubusercontent.com/media/wmgeolab/geoBoundaries/main/releaseData/gbOpen/IND/ADM2/geoBoundaries-IND-ADM2_simplified.geojson"
+  states_download_url: "https://media.githubusercontent.com/media/wmgeolab/geoBoundaries/main/releaseData/gbOpen/IND/ADM1/geoBoundaries-IND-ADM1_simplified.geojson"
+  simplify_tolerance: 0.01        # degrees, used for the dashboard choropleth
+
+# ------------------------------------------------------------
+# Paths (relative to project root)
+# ------------------------------------------------------------
+paths:
+  raw_power: "data/raw/power"
+  raw_geo: "data/raw/geo"
+  processed: "data/processed"
+  outputs: "outputs"
+
+# ------------------------------------------------------------
+# Spark tuning (sized for an 8 GB RAM laptop)
+# ------------------------------------------------------------
+spark:
+  master: "local[*]"
+  driver_memory: "2g"
+  shuffle_partitions: "16"
+
+# Anomaly baseline = full available climatology (documented limitation)
+anomalies:
+  wet_z: 1.5                      # |z| >= 1.5  -> unusually wet month
+  dry_z: -1.5                     # z <= -1.5   -> unusually dry month
+
+extremes:
+  # IMD (India Meteorological Department) rainfall classification, mm/day:
+  heavy_mm: 64.5                  # >= 64.5  mm/day  = "heavy rainfall"
+  extremely_heavy_mm: 115.6       # >= 115.6 mm/day  = "extremely heavy rainfall"

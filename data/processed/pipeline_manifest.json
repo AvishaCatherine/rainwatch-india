@@ -1,0 +1,195 @@
+{
+  "generated_at": "2026-10-19T15:31:23",
+  "project": {
+    "name": "RainWatch India",
+    "description": "Historical rainfall analytics and district-level rainfall-exposure assessment for India using Big Data tooling (Apache Spark, Parquet)."
+  },
+  "dataset": {
+    "source": "NASA POWER Daily Point API (MERRA-2, bias-corrected precipitation)",
+    "source_url": "https://power.larc.nasa.gov/docs/methodology/meteorology/precipitation/",
+    "parameter": "PRECTOTCORR",
+    "units": "mm/day",
+    "native_resolution": "~0.5 deg x 0.625 deg (MERRA-2 native grid)",
+    "sampling_grid": "0.5 deg x 0.5 deg lattice over India",
+    "requested_start": "2015-01-01",
+    "requested_end": "2026-10-18",
+    "substitution_note": "GPM IMERG Final Run (GES DISC) requires NASA Earthdata credentials and hundreds of GB per decade; per project rules the open, credential-free NASA POWER daily product is used instead. See docs/DATA_SOURCES.md."
+  },
+  "coverage": {
+    "min_date": "2015-01-01",
+    "max_date": "2026-10-16",
+    "n_days": 4307,
+    "n_years": 12
+  },
+  "validation": {
+    "n_files": 3460,
+    "n_valid_files": 3460,
+    "n_invalid_files": 0,
+    "invalid_examples": [],
+    "n_values_all_files": 14909140,
+    "n_missing_fill": 6920,
+    "n_null": 0,
+    "n_negative": 0,
+    "missing_pct": 0.046,
+    "min_date_any": "2015-01-01",
+    "max_date_any": "2026-10-18",
+    "elapsed_s": 9.5
+  },
+  "ingest": {
+    "reused": true
+  },
+  "geography": {
+    "n_grid_points": 3538,
+    "n_land_cells": 1171,
+    "n_district_polygons": 735,
+    "n_districts_with_data": 573,
+    "n_states_with_data": 33,
+    "dashboard_geojson": "data/processed/geo/districts_simplified.geojson",
+    "geojson_size_mb": 1.52
+  },
+  "spark": {
+    "version": "3.5.4",
+    "master": "local[*]",
+    "driver_memory": "2g",
+    "shuffle_partitions": "16"
+  },
+  "outputs": {
+    "india_daily": {
+      "size_mb": 0.08,
+      "rows": 4307
+    },
+    "monthly_summary": {
+      "size_mb": 0.01,
+      "rows": 142
+    },
+    "annual_summary": {
+      "size_mb": 0.0,
+      "rows": 12
+    },
+    "seasonal_summary": {
+      "size_mb": 0.0,
+      "rows": 48
+    },
+    "climatology": {
+      "size_mb": 0.0,
+      "rows": 12
+    },
+    "anomalies_monthly": {
+      "size_mb": 0.01,
+      "rows": 142
+    },
+    "extremes_days": {
+      "size_mb": 0.02,
+      "rows": 200
+    },
+    "district_stats": {
+      "size_mb": 0.03,
+      "rows": 581
+    },
+    "district_monthly": {
+      "size_mb": 0.4,
+      "rows": 82502
+    },
+    "district_daily": {
+      "size_mb": 9.78,
+      "rows": 2502367
+    },
+    "grid_monthly": {
+      "size_mb": 1.21,
+      "rows": 164862
+    },
+    "grid_cell_stats": {
+      "size_mb": 0.03,
+      "rows": 1161
+    },
+    "rainfall_histogram": {
+      "size_mb": 0.0,
+      "rows": 84
+    }
+  },
+  "raw_schema": {
+    "fields": [
+      {
+        "metadata": {},
+        "name": "lat",
+        "nullable": true,
+        "type": "double"
+      },
+      {
+        "metadata": {},
+        "name": "lon",
+        "nullable": true,
+        "type": "double"
+      },
+      {
+        "metadata": {},
+        "name": "rainfall_mm",
+        "nullable": true,
+        "type": "double"
+      },
+      {
+        "metadata": {},
+        "name": "date",
+        "nullable": true,
+        "type": "date"
+      },
+      {
+        "metadata": {},
+        "name": "flag",
+        "nullable": true,
+        "type": "string"
+      },
+      {
+        "metadata": {},
+        "name": "month",
+        "nullable": true,
+        "type": "integer"
+      },
+      {
+        "metadata": {},
+        "name": "day",
+        "nullable": true,
+        "type": "integer"
+      },
+      {
+        "metadata": {},
+        "name": "doy",
+        "nullable": true,
+        "type": "integer"
+      },
+      {
+        "metadata": {},
+        "name": "season",
+        "nullable": true,
+        "type": "string"
+      },
+      {
+        "metadata": {},
+        "name": "month_name",
+        "nullable": true,
+        "type": "string"
+      },
+      {
+        "metadata": {},
+        "name": "is_monsoon",
+        "nullable": true,
+        "type": "integer"
+      },
+      {
+        "metadata": {},
+        "name": "year",
+        "nullable": true,
+        "type": "integer"
+      }
+    ],
+    "type": "struct"
+  },
+  "timings_s": {
+    "validate_raw_s": 9.6,
+    "geography_s": 2.5,
+    "analytics_compute_s": 5.3,
+    "analytics_write_s": 65.0
+  },
+  "total_runtime_s": 105.1,
+  "disclaimer": "Educational historical analysis only. Statistical rainfall anomalies are not disaster declarations; rainfall exposure indicators are not flood-risk predictions."
+}

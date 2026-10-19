@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.coverage
+
+# Spark runtime artifacts
+spark-warehouse/
+metastore_db/
+derby.log
+
+# Large raw data (re-download with scripts/01_download_data.py)
+data/raw/power/
+
+# Runtime logs
+outputs/*.log
+
+# OS noise
+.DS_Store
+Thumbs.db
+
+# Deployment: exclude raw and bulky intermediate datasets
+data/raw/
+data/processed/raw_rainfall/
+data/processed/district_daily/
+data/processed/geo/*.crc
+
+# Spark-generated metadata and checksums
+data/processed/**/_SUCCESS
+data/processed/**/*.crc

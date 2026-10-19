@@ -1,0 +1,19 @@
+{
+  "operation": "groupBy(year, month).agg(sum, mean) over raw rainfall table",
+  "rows": 15238166,
+  "pandas": {
+    "seconds": 1.28
+  },
+  "spark": {
+    "seconds": 3.8,
+    "mode": "local[*], Noop sink"
+  },
+  "machine": {
+    "platform": "Linux-5.10.134-013.15.kangaroo.al8.x86_64-x86_64-with-glibc2.41",
+    "python": "3.12.15",
+    "cpu_count": "x86_64 x2",
+    "ram_gb": 4.4
+  },
+  "notes": "Single-machine local Spark; identical data, operation and hardware for both engines; warm-up run discarded per engine; Spark uses the Noop sink so no disk write skews the comparison; Pandas result fully materialised. Results are specific to this laptop and dataset size \u2014 they do not generalise to clusters.",
+  "timestamp": "2026-10-19 12:27:02"
+}
