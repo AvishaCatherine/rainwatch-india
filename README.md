@@ -3,7 +3,7 @@
 **Historical Rainfall Analytics and District-Level Rainfall-Exposure Assessment Using Big Data**
 *(Apache Spark · NASA POWER · Parquet · Streamlit)*
 
-An academic mini-project (B.Tech Information Technology) that processes ~15 million historical
+A  mini-project that processes ~15 million historical
 daily rainfall observations for India with Apache Spark, analyses multi-year patterns, detects
 statistically unusual wet/dry months, ranks district-level rainfall exposure, and presents
 everything in a professional dark-themed interactive dashboard.
@@ -218,5 +218,4 @@ pytest -q            # 35 tests, ~25 s, fully offline (synthetic fixture only)
 
 ---
 
-*Built as a two-week academic mini-project. Data: NASA POWER (NASA Langley), geoBoundaries.
-All processing code in `src/` runs on Apache Spark; see page 7 of the dashboard for full citations.*
+
